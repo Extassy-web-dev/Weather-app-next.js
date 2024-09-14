@@ -1,15 +1,32 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
 
 
-export default function Home({ data }: { data: any}) {
-    const router = useRouter()
-    console.log(data);
+
+export default function Home({ data }: { data: any }) {
+    const [city, setCity] = useState('');
+    const router = useRouter();
     
+    const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
+    const cityQuery = city.trim() !== '' ? city : 'Samarkand';
+
+
+  
 
     
+      router.push({
+        pathname: '/',
+        query: { city: cityQuery },
+      });
+    };
+
+
+
+
     return (
         <>
             <div className="main absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center w-full h-full max-w-full">
@@ -18,10 +35,10 @@ export default function Home({ data }: { data: any}) {
                     <img src="../bg-line2.png" className='absolute top-[80px] right-0' alt="" />
                     <div className="top p-[30px] w-full">
                         <div className='flex items-center justify-between w-full max-w-full h-[57px] bg-white rounded-2xl p-4'>
-                            <div className='flex items-center gap-[20px]'>
-                                <img className='cursor-pointer' src="../arrow.png" alt="" />
-                                <input className='bg-[none] border-none' type="text" placeholder='Search here' />
-                            </div>
+                            <form onSubmit={handleSubmit} className='flex items-center gap-[20px]'>
+                                <button type='submit'><img className='cursor-pointer' src="../arrow.png" alt="" /></button>
+                                <input  onChange={(e) => setCity(e.target.value)} value={city} className='bg-[none] border-none' type="text" placeholder='Search here' name='query' required/>
+                            </form>
                             <img className='cursor-pointer' src="../micro.png" alt="" />
                         </div>
                     </div>
@@ -30,7 +47,7 @@ export default function Home({ data }: { data: any}) {
                         <img className='z-50 opacity-[11]' src="../sun.png" alt="" />
                     </div>
 
-                    <div className='w-full max-w-full px-[30px] '>
+                    <div className='w-full max-w-full px-[30px] min-h-ull '>
                         <div onClick={() => router.push('/details')} className='border-[2px] p-[20px] cursor-pointer w-full max-w-full flex flex-col bg-[#80bcf8] items-center gap-[30px] border-gray-300 rounded-2xl'>
                             <div className='pt-[20px] flex justify-center items-center text-[18px] text-white'>
                                 Today, {new Date().getUTCDate()} {new Date().toLocaleString('en-US', { month: 'long' })}
@@ -68,27 +85,36 @@ export default function Home({ data }: { data: any}) {
         </>
     );
 }
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context: any) => {
     const API_ACCESS_KEY = process.env.API_ACCESS_KEY;
+    let { city } = context.query;
+    
+    if (!city) {
+        city = "Samarkand";
+    }
 
     if (!API_ACCESS_KEY) {
         console.error("API key is missing");
         return { props: { data: [] } };
     }
 
-    const res = await axios.get(`http://api.weatherstack.com/forecast`, {
-        params: {
-            access_key: API_ACCESS_KEY,
-            query: "Samarkand",
-            hourly: 1
-        }
-    });
+    try {
+        const res = await axios.get(`http://api.weatherstack.com/forecast`, {
+            params: {
+                access_key: API_ACCESS_KEY,
+                query: city,
+                hourly: 1
+            }
+        });
 
-    if (res.status !== 200) {
+        if (res.status !== 200) {
+            return { props: { data: [] } };
+        }
+
+        const data = res.data;
+        return { props: { data } };
+    } catch (error) {
+        console.error("Error fetching data:", error);
         return { props: { data: [] } };
     }
-
-    const data = await res.data
-
-    return { props: { data } };
 };

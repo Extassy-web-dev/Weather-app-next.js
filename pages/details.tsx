@@ -78,8 +78,9 @@ const details = ({ data }: { data: any }) => {
     ]
 
     return (
-        <div className="main flex justify-center items-center w-full h-full max-w-full">
-            <div className="app_box relative flex flex-col items-start gap-16 w-[450px]" style={{ background: "linear-gradient(-60deg, rgb(73, 169, 239), rgb(71, 190, 224))" }}>
+        <div className="min-h-screen w-full flex justify-center items-center">
+            <div className="app_box relative flex flex-col items-start gap-16 w-[450px] h-full"
+                style={{ background: "linear-gradient(-60deg, rgb(73, 169, 239), rgb(71, 190, 224))" }}>
                 <img src="../bg-line1.png" className='absolute top-[200px] left-0' alt="" />
                 <img src="../bg-line2.png" className='absolute top-[80px] right-0' alt="" />
 
@@ -98,7 +99,7 @@ const details = ({ data }: { data: any }) => {
                     {
                         statickData.map(item => {
                             return (
-                                <div key={item.id} className='flex flex-col items-center gap-[15px] p-[10px] transition-all hover:bg-[#6cbcec] hover:rounded-[20px] hover:backdrop-blur-[1px] hover:border-[2px_solid_gray]'>
+                                <div key={item.id} className='item-weather flex flex-col items-center gap-[15px] p-[10px] transition-al'>
                                     <span className='text-[18px] font-[400]' style={{ textShadow: "-2px 3px 1px rgba(0, 0, 0, 0.10)" }}>{item.gradus}</span>
                                     <img src={item.img} alt="" />
                                     <span className='text-[18px] font-[400]' style={{ textShadow: "-2px 3px 1px rgba(0, 0, 0, 0.10)" }}>{item.time}</span>
