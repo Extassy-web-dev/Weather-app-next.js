@@ -3,13 +3,10 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 
-const details = ({ data }: { data: any }) => {
-    const [dataWeather, setDataWeather] = useState([])
+const details = () => {
+   
     const router = useRouter()
 
-    useEffect(() => {
-        setDataWeather(data.forecast)
-    }, [])
 
     const statickData = [
         {
@@ -75,6 +72,36 @@ const details = ({ data }: { data: any }) => {
             img: "../rain.png",
             gradus: "32°"
         },
+        {
+            id: 6,
+            date: "Sep, 18",
+            img: "../thunder.png",
+            gradus: "21°"
+        },
+        {
+            id: 7,
+            date: "Sep, 19",
+            img: "../rain.png",
+            gradus: "22°"
+        },
+        {
+            id: 8,
+            date: "Sep, 20",
+            img: "../sunny.png",
+            gradus: "34°"
+        },
+        {
+            id: 9,
+            date: "Sep, 21",
+            img: "../cloudy.png",
+            gradus: "27°"
+        },
+        {
+            id: 10,
+            date: "Sep, 22",
+            img: "../rain.png",
+            gradus: "32°"
+        },
     ]
 
     return (
@@ -136,29 +163,3 @@ const details = ({ data }: { data: any }) => {
 };
 
 export default details;
-
-export const getServerSideProps = async () => {
-    const API_ACCESS_KEY = process.env.API_ACCESS_KEY;
-
-    if (!API_ACCESS_KEY) {
-        console.error("API key is missing");
-        return { props: { data: [] } };
-    }
-
-    const res = await axios.get(`http://api.weatherstack.com/forecast`, {
-        params: {
-            access_key: API_ACCESS_KEY,
-            query: "Samarkand",
-            hourly: 1
-        }
-    });
-
-    if (res.status !== 200) {
-        return { props: { data: [] } };
-    }
-
-    const data = await res.data
-
-    return { props: { data } };
-};
-
