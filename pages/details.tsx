@@ -113,8 +113,7 @@ const details = () => {
                     <img src="../bg-line1.png" className='absolute top-[200px] left-0' alt="" />
                     <img src="../bg-line2.png" className='absolute top-[80px] right-0' alt="" />
 
-
-                    <div className='px-[30px] pt-[40px]'>
+                    <div className='px-[20px] pt-[40px]'>
                         <img onClick={() => router.push('/')} src="../back.svg" alt="back" className='cursor-pointer' />
                     </div>
 
@@ -138,26 +137,24 @@ const details = () => {
                         }
                     </div>
 
-                    <div className='w-full max-w-full px-[30px] text-white'>
-                        <div className='w-full flex justify-between items-center'>
-                            <h1 className='text-[24px] font-[900]' style={{ textShadow: "-2px 3px 1px rgba(0, 0, 0, 0.10)" }}>Next Forecast</h1>
-                            <img src="../calendar.png" alt="" />
-                        </div>
-
-
-                        <div className='box-weather flex flex-col gap-5 w-full max-w-full overflow-y-scroll h-[17rem] pr-[50px]'>
-                        {
-                            statickWeatherData.map(item => {
-                                return (
-                                    <div key={item?.id} className='flex items-center justify-between'>
-                                        <span className='text-[18px] font-[700]' style={{ textShadow: "-2px 3px 1px rgba(0, 0, 0, 0.10)" }}>{item?.date}</span>
-                                        <img src={item?.img} alt="" />
-                                        <span className='text-[18px] font-[400]' style={{ textShadow: "-2px 3px 1px rgba(0, 0, 0, 0.10)" }}>{item?.gradus}</span>
-                                    </div>
-                                )
-                            })
-                        }
+                    <div className='w-full px-[30px] text-white flex justify-between items-center'>
+                        <h1 className='text-[24px] font-[900]' style={{ textShadow: "-2px 3px 1px rgba(0, 0, 0, 0.10)" }}>Next Forecast</h1>
+                        <img src="../calendar.png" alt="" />
                     </div>
+                    <div className='box-weather w-full max-w-full px-[30px] text-white overflow-y-scroll'>
+                        <div className='flex flex-col gap-5 w-full max-w-full'>
+                            {
+                                statickWeatherData.map(item => {
+                                    return (
+                                        <div key={item?.id} className='flex items-center justify-between'>
+                                            <span className='text-[18px] font-[700]' style={{ textShadow: "-2px 3px 1px rgba(0, 0, 0, 0.10)" }}>{item?.date}</span>
+                                            <img src={item?.img} alt="" />
+                                            <span className='text-[18px] font-[400]' style={{ textShadow: "-2px 3px 1px rgba(0, 0, 0, 0.10)" }}>{item?.gradus}</span>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             </div >
