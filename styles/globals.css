@@ -40,6 +40,5 @@ html, body {
 
 .item-weather:hover {
   background-color: #6cbcec;
-  border-radius: 10px;
   border: 1px solid rgba(204, 204, 204, 0.925);
 }
